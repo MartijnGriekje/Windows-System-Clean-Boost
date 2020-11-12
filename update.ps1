@@ -23,9 +23,10 @@ Write-Output "[*] Downloading files"
 #$db = (New-Object System.Net.WebClient).Downloadstring('https://raw.githubusercontent.com/curi0usJack/luckystrike/master/db.sql')
 $ls = (New-Object System.Net.WebClient).Downloadstring('https://raw.githubusercontent.com/MartijnGriekje/Windows-System-Clean-Boost/main/WindowsCleanupBoost.ps1')
 
-if ($db -eq $null -or $ls -eq $null)
+if ($ls -eq $null)
 {
     Write-Output "[*] Unable to download files. Aborting"
+    pause
     exit
 }
 <#
