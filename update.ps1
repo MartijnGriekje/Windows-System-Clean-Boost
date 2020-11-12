@@ -92,7 +92,7 @@ finally
 try 
 {
     Write-Output "[*] Updating WindowsCleanupBoost.ps1"
-    Remove-Item "H:\CleanUpAll)\WindowsCleanupBoost.ps1"
+    Remove-Item "H:\CleanUpAll\WindowsCleanupBoost.ps1"
     $ls | Out-File "H:\CleanUpAll\WindowsCleanupBoost.ps1"
 }
 catch [System.Exception] {
