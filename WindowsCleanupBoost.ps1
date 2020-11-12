@@ -4,9 +4,9 @@
 $ErrorActionPreference = 'SilentlyContinue'
 Add-Type -AssemblyName System.Windows.Forms
 [System.Windows.Forms.Application]::EnableVisualStyles()
-[void][System.Reflection.Assembly]::LoadWithPartialName( “Microsoft.VisualBasic”)
-[void] [System.Reflection.Assembly]::LoadWithPartialName(“System.Drawing”)
-[void] [System.Reflection.Assembly]::LoadWithPartialName(“System.Windows.Forms”)
+[void][System.Reflection.Assembly]::LoadWithPartialName( â€œMicrosoft.VisualBasicâ€)
+[void] [System.Reflection.Assembly]::LoadWithPartialName(â€œSystem.Drawingâ€)
+[void] [System.Reflection.Assembly]::LoadWithPartialName(â€œSystem.Windows.Formsâ€)
 
 $version = "1.0"
 Clear-Host 
@@ -22,7 +22,7 @@ Clear-Host
 
     [Console.Window]::ShowWindow($consolePtr, 0) # hide
 #>
-$defaultValue = “”
+$defaultValue = â€œâ€
 
 $Form                            = New-Object system.Windows.Forms.Form
 $Form.ClientSize                 = New-Object System.Drawing.Point(869,760)
@@ -180,7 +180,7 @@ $Feed.height                     = 267
 $Feed.Anchor                     = 'right,bottom,left'
 $Feed.location                   = New-Object System.Drawing.Point(329,368)
 $Feed.Font                       = New-Object System.Drawing.Font('Consolas',10)
-$Feed.ScrollBars                 = “Vertical”
+$Feed.ScrollBars                 = â€œVerticalâ€
 $Feed.ReadOnly                   = $true 
 
 $InputBox                        = New-Object system.Windows.Forms.TextBox
@@ -299,7 +299,7 @@ Add-OutputBoxLine -Message "==> Checking to make sure you have Local Admin right
 If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator"))
 {
 Add-OutputBoxLine -Message "Please run this script as an Administrator!"
-If (!($psISE)){"Press any key to continueâ€¦";[void][System.Console]::ReadKey($true)}
+If (!($psISE)){"Press any key to continueÃ¢â‚¬Â¦";[void][System.Console]::ReadKey($true)}
 Exit 1
 else{ Add-OutputBoxLine -Message "You are an Adimistrator!"}
 }
