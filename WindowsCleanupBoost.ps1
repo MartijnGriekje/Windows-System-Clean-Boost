@@ -8,7 +8,7 @@ Add-Type -AssemblyName System.Windows.Forms
 [void] [System.Reflection.Assembly]::LoadWithPartialName(“System.Drawing”)
 [void] [System.Reflection.Assembly]::LoadWithPartialName(“System.Windows.Forms”)
 
-$version = "1.0"
+$version = "2.1"
 Clear-Host 
  <## hide the powerhsell console
     Add-Type -Name Window -Namespace Console -MemberDefinition '
