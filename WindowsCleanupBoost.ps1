@@ -22,7 +22,7 @@ HideConsole
 
 #$ErrorActionPreference = 'SilentlyContinue'
 
-$version = "2.1"
+$version = "2.0"
 $githubver = "https://raw.githubusercontent.com/MartijnGriekje/Windows-System-Clean-Boost/main/currentversion.txt"
 $updatefile = "https://raw.githubusercontent.com/MartijnGriekje/Windows-System-Clean-Boost/main/update.ps1"
 Clear-Host 
