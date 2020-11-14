@@ -12,8 +12,8 @@ if ($ls -eq $null)
 try 
 {
     Write-Output "[*] Updating WindowsCleanupBoost.ps1"
-    Remove-Item "C:\CleanUpAll\WindowsCleanupBoost.ps1"
-    $ls | Out-File "C:\CleanUpAll\WindowsCleanupBoost.ps1"
+    Remove-Item "$env:HOMEDRIVE\CleanUpAll\WindowsCleanupBoost.ps1"
+    $ls | Out-File "$env:HOMEDRIVE\CleanUpAll\WindowsCleanupBoost.ps1"
 }
 catch [System.Exception] {
     Write-Output "Error saving new version of WindowsCleanupBoost.ps1"
