@@ -23,4 +23,5 @@ catch [System.Exception] {
 }
 
 Write-Output "[*] Done!"
+Write-Output "[*] Please restart WindowsCleanupBoost"
 pause
