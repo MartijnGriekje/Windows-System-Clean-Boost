@@ -48,7 +48,7 @@ Add-Type -AssemblyName PresentationCore
 $Form                            = New-Object system.Windows.Forms.Form
 $Form.ClientSize                 = New-Object System.Drawing.Point(869,790)
 $Form.text                       = "Windows System Clean-Up & Boost"
-$Form.TopMost                    = $true
+$Form.TopMost                    = $false
 $form.FormBorderStyle            = [System.Windows.Forms.FormBorderStyle]::FixedToolWindow  ### Optional - prevents resize of the window
 
 $Label1                          = New-Object system.Windows.Forms.Label
