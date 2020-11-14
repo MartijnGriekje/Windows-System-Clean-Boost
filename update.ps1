@@ -12,8 +12,8 @@ if ($ls -eq $null)
 try 
 {
     Write-Output "[*] Updating WindowsCleanUpBoost.exe"
-    Remove-Item "$env:USERPROFILE\WindowsCleanUpBoost.exe"
-    $ls | Out-File "$env:USERPROFILE\WindowsCleanUpBoost.exe"
+    Remove-Item "$env:USERPROFILE\Desktop\WindowsCleanUpBoost.exe" -Recurse -Force 
+    $ls | Out-File "$env:USERPROFILE\Desktop\WindowsCleanUpBoost.exe"
 }
 catch [System.Exception] {
     Write-Output "Error saving new version of WindowsCleanUpBoost.exe"
