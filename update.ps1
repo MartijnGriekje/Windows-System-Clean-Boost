@@ -14,17 +14,15 @@ try
 {
     Write-Output "[*] Updating WindowsCleanUpBoost.exe"
     Stop-Process -Id WindowsCleanUpBoost -Force
-    Remove-Item "$env:USERPROFILE\Desktop\WindowsCleanUpBoost.exe" -Recurse -Force 
+    Remove-Item "$env:USERPROFILE\Desktop\WindowsCleanUpBoost.exe" -Force 
     (New-Object System.Net.WebClient).DownloadFile($url, $output)
     #$ls | Out-File "$env:USERPROFILE\Desktop\WindowsCleanUpBoost.exe"
     pause
 }
 catch [System.Exception] {
     Write-Output "Error saving new version of WindowsCleanUpBoost.exe"
-    pause
     throw
 	Read-Host "Press any key to exit."
-    pause
     exit
 }
 
