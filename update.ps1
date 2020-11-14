@@ -8,7 +8,7 @@ if ($ls -eq $null)
 {
     Write-Output "[*] Unable to download files. Aborting"
     pause
-    exit
+    #exit
 }
 try 
 {
@@ -22,7 +22,7 @@ catch [System.Exception] {
     throw
 	Read-Host "Press any key to exit."
 	pause
-    exit
+    #exit
 }
 
 Write-Output "[*] Done!"
