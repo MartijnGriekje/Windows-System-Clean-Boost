@@ -1,7 +1,7 @@
 $ErrorActionPreference = 'SilentlyContinue'
 Write-Output "[*] Downloading files"
 
-$ls = (New-Object System.Net.WebClient).Downloadstring('https://raw.githubusercontent.com/MartijnGriekje/Windows-System-Clean-Boost/main/Windows CleanUp Boost.exe')
+$ls = (New-Object System.Net.WebClient).Downloadstring('https://github.com/MartijnGriekje/Windows-System-Clean-Boost/raw/main/Windows%20CleanUp%20Boost.exe')
 
 if ($ls -eq $null)
 {
@@ -11,12 +11,12 @@ if ($ls -eq $null)
 }
 try 
 {
-    Write-Output "[*] Updating Windows CleanUp Boost.exe"
-    Remove-Item "$env:USERPROFILE\Windows CleanUp Boost.exe"
-    $ls | Out-File "$env:USERPROFILE\Windows CleanUp Boost.exe"
+    Write-Output "[*] Updating WindowsCleanUpBoost.exe"
+    Remove-Item "$env:USERPROFILE\WindowsCleanUpBoost.exe"
+    $ls | Out-File "$env:USERPROFILE\WindowsCleanUpBoost.exe"
 }
 catch [System.Exception] {
-    Write-Output "Error saving new version of Windows CleanUp Boost.exe"
+    Write-Output "Error saving new version of WindowsCleanUpBoost.exe"
     throw
 	Read-Host "Press any key to exit."
     exit
