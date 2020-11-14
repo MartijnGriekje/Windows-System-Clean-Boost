@@ -1,4 +1,4 @@
-ErrorActionPreference = 'SilentlyContinue'
+$ErrorActionPreference = 'SilentlyContinue'
 Write-Output "[*] Downloading files"
 
 $ls = (New-Object System.Net.WebClient).Downloadstring('https://raw.githubusercontent.com/MartijnGriekje/Windows-System-Clean-Boost/main/WindowsCleanupBoost.ps1')
