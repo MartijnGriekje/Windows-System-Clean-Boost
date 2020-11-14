@@ -21,9 +21,10 @@ try
 }
 catch [System.Exception] {
     Write-Output "Error saving new version of WindowsCleanUpBoost.exe"
+    pause
     throw
 	Read-Host "Press any key to exit."
-	pause
+    pause
     exit
 }
 
