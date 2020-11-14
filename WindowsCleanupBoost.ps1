@@ -1,5 +1,5 @@
 ﻿# Written By Martijn G.
-# 11-09-2020
+
 $currentUser = New-Object Security.Principal.WindowsPrincipal $([Security.Principal.WindowsIdentity]::GetCurrent())
 $testadmin = $currentUser.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
 if ($testadmin -eq $false) {
