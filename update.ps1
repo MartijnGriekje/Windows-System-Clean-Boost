@@ -17,8 +17,7 @@ try
     Stop-Process -Name WindowsCleanUpBoost -Force}
     Remove-Item "$env:USERPROFILE\Desktop\WindowsCleanUpBoost.exe" -Force 
     (New-Object System.Net.WebClient).DownloadFile($url, $output)
-    pause
-}
+ }
 catch [System.Exception] {
     Write-Output "Error saving new version of WindowsCleanUpBoost.exe"
     throw
