@@ -13,10 +13,10 @@ if ($ls -eq $null)
 try 
 {
     Write-Output "[*] Updating WindowsCleanUpBoost.exe"
-    Stop-Process -Id WindowsCleanUpBoost -Force
+    If (Get-Process -Name WindowsCleanUpBoost){
+    Stop-Process -Name WindowsCleanUpBoost -Force}
     Remove-Item "$env:USERPROFILE\Desktop\WindowsCleanUpBoost.exe" -Force 
     (New-Object System.Net.WebClient).DownloadFile($url, $output)
-    #$ls | Out-File "$env:USERPROFILE\Desktop\WindowsCleanUpBoost.exe"
     pause
 }
 catch [System.Exception] {
