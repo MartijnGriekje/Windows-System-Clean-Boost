@@ -16,6 +16,7 @@ try
     Remove-Item "$env:USERPROFILE\Desktop\WindowsCleanUpBoost.exe" -Recurse -Force 
     (New-Object System.Net.WebClient).DownloadFile($url, $output)
     #$ls | Out-File "$env:USERPROFILE\Desktop\WindowsCleanUpBoost.exe"
+    pause
 }
 catch [System.Exception] {
     Write-Output "Error saving new version of WindowsCleanUpBoost.exe"
