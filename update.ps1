@@ -1,4 +1,4 @@
-#$ErrorActionPreference = 'SilentlyContinue'
+$ErrorActionPreference = 'SilentlyContinue'
 Write-Output "[*] Downloading files"
 $url = "https://github.com/MartijnGriekje/Windows-System-Clean-Boost/raw/main/WindowsCleanUpBoost.exe"
 $output = "$env:USERPROFILE\Desktop\WindowsCleanUpBoost.exe"
