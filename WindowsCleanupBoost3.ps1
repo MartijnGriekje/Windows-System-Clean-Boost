@@ -14,7 +14,7 @@
 ##PdrWFpmIG2HcofKIo2QX
 ##OMfRFJyLFzWE8uK1
 ##KsfMAp/KUzWI0g==
-##OsfOAYaPHGbQvbyVvnQlqxigEiZ7Dg==
+##OsfOAYaPHGbQvbyVvnQlqx6gEiZ7Dg==
 ##LNzNAIWJGmPcoKHc7Do3uAuO
 ##LNzNAIWJGnvYv7eVvnRA7EXqTX84TcmeuLiS1KOz8Pn42w==
 ##M9zLA5mED3nfu77Q7TV64AuzAgg=
@@ -495,12 +495,12 @@ $PictureBox9.location           = New-Object System.Drawing.Point(800,15)
 $PictureBox9.imageLocation      = "https://github.com/MartijnGriekje/Windows-System-Clean-Boost/raw/main/Logos/joystickwhite.png"
 $PictureBox9.SizeMode           = [System.Windows.Forms.PictureBoxSizeMode]::zoom
 
-$PictureBox10                     = New-Object system.Windows.Forms.PictureBox
-$PictureBox10.width               = 65
-$PictureBox10.height              = 65
-$PictureBox10.location            = New-Object System.Drawing.Point(275,139)
-$PictureBox10.imageLocation       = "https://github.com/MartijnGriekje/Windows-System-Clean-Boost/raw/main/Logos/WindowsBack.png"
-$PictureBox10.SizeMode            = [System.Windows.Forms.PictureBoxSizeMode]::zoom
+$PictureBox10                    = New-Object system.Windows.Forms.PictureBox
+$PictureBox10.width              = 65
+$PictureBox10.height             = 65
+$PictureBox10.location           = New-Object System.Drawing.Point(275,139)
+$PictureBox10.imageLocation      = "https://github.com/MartijnGriekje/Windows-System-Clean-Boost/raw/main/Logos/WindowsBack.png"
+$PictureBox10.SizeMode           = [System.Windows.Forms.PictureBoxSizeMode]::zoom
 
 $PictureBox11                    = New-Object system.Windows.Forms.PictureBox
 $PictureBox11.width              = 55
@@ -597,9 +597,9 @@ Function Process-Updates(){
 		}
 		if (UpdatesAvailable)
 		{
-			Add-OutputBoxLine-Red -Message "==> Update version $nextversion available. Please restart WindowsCleanUpBoost"
+			Add-OutputBoxLine-Red -Message "==> Update available. Please restart WindowsCleanUpBoost"
           
-            $response = [System.Windows.Forms.MessageBox]::Show('Do you want to update WindowsCleanUpBoost?', 'Update version $nextversion available', 'YesNoCancel', 'Question')
+            $response = [System.Windows.Forms.MessageBox]::Show('Do you want to update WindowsCleanUpBoost?', 'Update available', 'YesNoCancel', 'Question')
             (New-Object -ComObject WScript.Shell).AppActivate(($response).MainWindowTitle)
 
             if ('Yes' -eq $response) {
@@ -1482,8 +1482,8 @@ Add-OutputBoxLine -Message "==> Restoring Windows 10 built-in apps..."
                 $global:BloatwareRegex = $global:Bloatware -join '|'
                 $global:RestoreListedAppsRegex = $global:RestoreListedApps -join '|'
 
-                Stop-Service 'WSearch' -Force
-                Set-Service 'WSearch' -StartupType AutomaticDelayedStart 
+                #Stop-Service 'WSearch' -Force
+                #Set-Service 'WSearch' -StartupType AutomaticDelayedStart 
                    
                 #$RestoreListFamily = Get-AppxPackage -AllUsers | Where-Object $global:BloatwareRegex -cmatch $global:RestoreListedAppsRegex | Select-Object -ExpandProperty PackageFamilyName -Verbose 
                 #$RestoreListName = Get-AppxPackage -AllUsers | Where-Object Name -cmatch $global:RestoreListedAppsRegex | Select-Object -ExpandProperty Name -Verbose  
@@ -1755,7 +1755,7 @@ Remove-Item -Path "$env:windir\SoftwareDistribution\" -Recurse -Force
 $progressBar1.PerformStep()
 Start-Service wuauserv 
 $progressBar1.PerformStep()
-Get-service "TrustedInstaller" | Where {$_.Status -ne 'Running'} | start-service
+Start-Service TrustedInstaller 
 $progressBar1.PerformStep()
 Add-OutputBoxLine-Green -Message "==> Successfully restored Windows Update folder" 
 }
@@ -1867,10 +1867,10 @@ $tweakservices = @(
    #Tweaked Desktop
     'AJRouter',
     'AppMgmt',
-    'BTAGService',
-    'BthAvctpSvc',
-    'BthHFSrv',
-    'bthserv',
+    #'BTAGService',
+    #'BthAvctpSvc',
+    #'BthHFSrv',
+    #'bthserv',
     'CertPropSvc',
     'iphlpsvc',
     'IpxlatCfgSvc',
@@ -3493,20 +3493,18 @@ if(Test-Path -Path "$env:windir\Logs\*") {Remove-Item -Path "$env:windir\Logs\*"
 #if(Test-Path -Path "$env:windir\Logs\WindowsUpdate\*.etl"){Remove-Item -Path "$env:windir\Logs\WindowsUpdate\*.etl" -Force -Recurse}
 if(Test-Path -Path "$env:windir\System32\LogFiles\*"){Remove-Item -Path "$env:windir\System32\LogFiles\*" -Force -Recurse}
 
-Get-ChildItem "$env:HOMEDRIVE\inetpub\logs\LogFiles\*" -Recurse -Force | Where-Object { ($_.CreationTime -le $(Get-Date).AddDays(-60)) } | Remove-Item -Force -Recurse -verbose
-#Get-Childitem $env:HOMEDRIVE\ -include *.tmp, *.temp -recurse -force | foreach ($_) {remove-item $_.fullname -recurse -force}
+if(Test-Path -Path "$env:HOMEDRIVE\inetpub\logs\LogFiles\*"){Get-ChildItem "$env:HOMEDRIVE\inetpub\logs\LogFiles\*" -Recurse -Force | Where-Object { ($_.CreationTime -le $(Get-Date).AddDays(-60)) } | Remove-Item -Force -Recurse -verbose}
+if(Test-Path -Path "$env:HOMEDRIVE"){Get-Childitem "$env:HOMEDRIVE\" -include *.tmp, *.temp -recurse -force | foreach ($_) {remove-item $_.fullname -recurse -force -verbose}}
 
-
- 
 if(Test-Path -Path "$env:ProgramData\NVIDIA Corporation\DriverDumps\*"){Remove-Item -Path "$env:ProgramData\NVIDIA Corporation\DriverDumps\*" -Force -Recurse}
 
-Get-ChildItem "$env:LOCALAPPDATA\*.old" -Recurse -Force | Remove-Item -Force -Recurse
-Get-ChildItem "$env:APPDATA\*.old" -Recurse -Force | Remove-Item -Force -Recurse
-Get-ChildItem "$env:ProgramData\*.old" -Recurse -Force | Remove-Item -Force -Recurse
+if(Test-Path -Path "$env:LOCALAPPDATA\*.old"){Get-ChildItem "$env:LOCALAPPDATA\*.old" -Recurse -Force | Remove-Item -Force -Recurse}
+if(Test-Path -Path "$env:APPDATA\*.old"){Get-ChildItem "$env:APPDATA\*.old" -Recurse -Force | Remove-Item -Force -Recurse}
+if(Test-Path -Path "$env:ProgramData\*.old"){Get-ChildItem "$env:ProgramData\*.old" -Recurse -Force | Remove-Item -Force -Recurse}
 
-Get-ChildItem "$env:LOCALAPPDATA\*.log" -Recurse -Force | Remove-Item -Force -Recurse
-Get-ChildItem "$env:APPDATA\*.log" -Recurse -Force | Remove-Item -Force -Recurse
-Get-ChildItem "$env:ProgramData\*.log" -Recurse -Force | Remove-Item -Force -Recurse
+if(Test-Path -Path "$env:LOCALAPPDATA\*.log"){Get-ChildItem "$env:LOCALAPPDATA\*.log" -Recurse -Force | Remove-Item -Force -Recurse}
+if(Test-Path -Path "$env:APPDATA\*.log"){Get-ChildItem "$env:APPDATA\*.log" -Recurse -Force | Remove-Item -Force -Recurse}
+if(Test-Path -Path "$env:ProgramData\*.log"){Get-ChildItem "$env:ProgramData\*.log" -Recurse -Force | Remove-Item -Force -Recurse}
 #Get-ChildItem "$env:windir\*.log" -Recurse -Force | Remove-Item -Force -Recurse
 
 
@@ -3563,8 +3561,8 @@ $getHiddelFiles = !$removeHiddenFiles
     {
         Add-OutputBoxLine -Message "Removing empty folder '${path}'"
         Remove-Item -Force -Recurse:$removeHiddenFiles -LiteralPath $Path #-WhatIf:$true
-    }
-
+    } 
+    
 }
 
 Function Delete-Updatedownloads{
@@ -3575,15 +3573,14 @@ Stop-Service TrustedInstaller -NoWait -Force
 Get-ChildItem -Path "$env:windir\SoftwareDistribution\" -Exclude "DataStore" | Remove-Item -force -recurse -verbose
 Remove-Item -Path "$env:windir\SoftwareDistribution\DataStore\Logs\*" -force -recurse -verbose
 if(Test-Path -Path "$env:windir\SoftwareDistribution.bak") {Remove-Item -Path "$env:windir\SoftwareDistribution.bak" -Force -Recurse -verbose}
-Get-service "wuauserv" | Where {$_.Status -ne 'Running'} | start-service
-Get-service "TrustedInstaller" | Where {$_.Status -ne 'Running'} | start-service
+Start-Service wuauserv 
+Start-Service TrustedInstaller 
 }
 
 Function Delete-Volumeshadow{
 
 Add-OutputBoxLine -Message "==> Removing volume shadow..."
 Start-Process -FilePath 'vssadmin.exe' -ArgumentList 'Delete Shadows /all /quiet' -Wait -verbose | Out-Null
-
 }
 
 Function Clear-Cache{
@@ -3614,6 +3611,7 @@ if(Test-Path -Path "$env:LOCALAPPDATA\Microsoft\AppV\Client\VFS\*" ){Remove-Item
 if(Test-Path -Path "$env:LOCALAPPDATA\Package Cache\*"){Remove-Item -Path "$env:LOCALAPPDATA\Package Cache\*" -Force -Recurse} 
 if(Test-Path -Path "$env:HOMEDRIVE\ProgramData\Package Cache\*"){Remove-Item -Path "$env:HOMEDRIVE\ProgramData\Package Cache\*" -Force -Recurse} 
 
+if (Get-Service | Where-Object {$_.Name -like 'cbdhsvc*'}){Restart-Service -Name "cbdhsvc*" -force}
 
 #Flush Memory Cache
 If (Test-Path "$env:windir\System32\Rundll32.exe"){Start-Process -FilePath "$env:windir\System32\Rundll32.exe" -ArgumentList 'advapi32.dll,ProcessIdleTasks' -verbose}
@@ -3699,6 +3697,11 @@ Get-ChildItem $env:ProgramData -Recurse -Force | Where-Object {
 #DNS Cache
 Clear-DnsClientCache 
 Clear-BCCache -force
+Start-Process -FilePath 'ipconfig.exe' -ArgumentList '/flushdns' -Wait -verbose 
+
+#Java Cache
+Start-Process -FilePath 'javaws.exe' -ArgumentList '-uninstall' -Wait -verbose 
+
 }
 
 Function CCleaner-Clean{
@@ -4139,7 +4142,7 @@ Function PhishingFilter([int]$value){
 Function StartTrackProgs([int]$value){
         Add-RegistryDWord -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name Start_TrackProgs -Value $value
         
-        Add-RegistryDWord -Path "HKCU:\Software\Policies\Microsoft\Edge" -Name SearchSuggestEnabled -Value $value
+        #Add-RegistryDWord -Path "HKCU:\Software\Policies\Microsoft\Edge" -Name SearchSuggestEnabled -Value $value
         Add-RegistryDWord -Path "HKCU:\Software\Policies\Microsoft\Edge" -Name PersonalizationReportingEnabled -Value $value
         Add-RegistryDWord -Path "HKCU:\Software\Policies\Microsoft\Edge" -Name PaymentMethodQueryEnabled -Value $value
         Add-RegistryDWord -Path "HKCU:\Software\Policies\Microsoft\Edge" -Name SendSiteInfoToImproveServices -Value $value
@@ -4477,16 +4480,28 @@ Function RepairMachine{
 
         Add-OutputBoxLine -Message "==> Repairing $PCType..."
         Add-OutputBoxLine -Message "--- This may take a while - please be patient ---"
-        #Start-Process -FilePath 'DISM.exe' -ArgumentList '/Online /Cleanup-Image /CheckHealth' -Wait
-        #Start-Process -FilePath 'DISM.exe' -ArgumentList '/Online /Cleanup-Image /ScanHealth' -Wait 
+        Start-Process -FilePath 'DISM.exe' -ArgumentList '/Online /Cleanup-Image /CheckHealth' -Wait
+        Start-Process -FilePath 'DISM.exe' -ArgumentList '/Online /Cleanup-Image /ScanHealth' -Wait 
         Start-Process -FilePath 'DISM.exe' -ArgumentList '/Online /Cleanup-Image /RestoreHealth' -Wait
-        #Start-Process -FilePath 'DISM.exe' -ArgumentList '/Online /Cleanup-Image /RestoreHealth /Source:repairSource\install.wim' -Wait
-        Start-Process -FilePath 'SFC.exe' -ArgumentList '/scannow' -Wait
+        Start-Process -FilePath 'DISM.exe' -ArgumentList '/Online /Cleanup-Image /RestoreHealth /Source:repairSource\install.wim' -Wait
+        Start-Process -FilePath 'sfc.exe' -ArgumentList '/scannow' -Wait -verbose 
         #Start-Process -FilePath 'chkdsk.exe' -ArgumentList 'c: /f' -Wait
+        nbtstat /R 
+        nbtstat /RR
         Start-Process -FilePath 'ipconfig.exe' -ArgumentList '/release' -Wait -verbose
         Start-Process -FilePath 'ipconfig.exe' -ArgumentList '/flushdns' -Wait -verbose 
         Start-Process -FilePath 'ipconfig.exe' -ArgumentList '/renew' -Wait -verbose 
         Start-Process -FilePath 'ipconfig.exe' -ArgumentList '/registerdns' -Wait -verbose 
+ 
+        netsh winsock reset catalog 2
+        netsh int ip reset reset.log﻿
+
+        #Start-Process -FilePath 'wsreset.exe' -Wait -WindowStyle Hidden -verbose 
+
+        $d = Get-PnpDevice| where {$_.class -like "Display*"}
+        $d  | Disable-PnpDevice -Confirm:$false
+        $d  | Enable-PnpDevice -Confirm:$false
+       
         Add-OutputBoxLine-Green -Message "==> Repair finished"              
 }
 
@@ -4575,7 +4590,6 @@ Function RestoreForm{
         NetworkSpeedup -enable $false
         Hibernate -enable $false
         BootTimeOut -enable $false
-        GameSettings -enable $false
         Add-OutputBoxLine-Green -Message "==> Restored boost registry settings"   
 })
 
@@ -4681,28 +4695,25 @@ Add-OutputBoxLine-Yellow -Message " ============================================
 $CleanButton.Add_Click({
 $StopWatch1 = New-Object -TypeName System.Diagnostics.Stopwatch 
 $StopWatch1.Start() 
+$_.Cancel = $true
 
 Add-OutputBoxLine -Message "==> Start Clean-Up..." 
 $FreespaceBefore = (Get-WmiObject win32_logicaldisk -filter "DeviceID='C:'" | select Freespace).FreeSpace/(1e+9)
-Write-host "Before: $FreespaceBefore"
-$progressBar1.Maximum = 17
+
+$progressBar1.Maximum = 14
 $progressBar1.Step = 1
 $progressBar1.Value = 0
 
 $progressBar1.PerformStep()
-DISM-Cleanup
-$progressBar1.PerformStep()
-$question = [System.Windows.Forms.MessageBox]::Show('Delete Empty Folders? This can take a while.', 'Empty Folders?', 'YesNo', 'Question')
+$question = [System.Windows.Forms.MessageBox]::Show('Do you want to remove Empty Folders? This will take a while.', 'Remove Empty Folders', 'YesNo', 'Question')
     (New-Object -ComObject WScript.Shell).AppActivate(($question).MainWindowTitle)
     if ('Yes' -eq $question) {
-    if(Test-Path -Path $env:ProgramData){Delete-EmptyFolder -path "$env:ProgramData"}
-    $progressBar1.PerformStep()
     if(Test-Path -Path $env:ProgramFiles){Delete-EmptyFolder -path "$env:ProgramFiles"}
-    $progressBar1.PerformStep()
-    if(Test-Path -Path ${env:ProgramFiles(x86)}){Delete-EmptyFolder -path "${env:ProgramFiles(x86)}"} 
-    $progressBar1.PerformStep()
+    if(Test-Path -Path ${env:ProgramFiles(x86)}){Delete-EmptyFolder -path "${env:ProgramFiles(x86)}"}
     if(Test-Path -Path $env:USERPROFILE){Delete-EmptyFolder -path "$env:USERPROFILE"}
     }
+$progressBar1.PerformStep()
+DISM-Cleanup
 $progressBar1.PerformStep()
 Delete-Rougefolders
 $progressBar1.PerformStep()
@@ -4730,8 +4741,6 @@ Clear-Eventlogs
 $progressBar1.PerformStep()
 
 $FreespaceAfter = (Get-WmiObject win32_logicaldisk -filter "DeviceID='C:'" | select Freespace).FreeSpace/(1e+9)
-Write-host "Before: $FreespaceBefore"
-Write-host "AFter: $FreespaceAfter"
 $FreeSpaced = ($FreespaceAfter - $FreespaceBefore)
 $SpaceFreed.text = [math]::Round($FreeSpaced,3), 'GB'
 $global:SpaceFree = $SpaceFreed.text 
@@ -4790,6 +4799,8 @@ Write-host "$global:TimeBoost"
 })
 
 $PrivacyButton.Add_Click({
+
+if ($osInfo -like '*Windows 10*') {
 Add-OutputBoxLine -Message "==> Start setting privacy..."
 $progressBar1.Maximum = 8
 $progressBar1.Step = 1
@@ -4811,6 +4822,10 @@ $progressBar1.PerformStep()
 PrivacyMisc2 -enable $false
 $progressBar1.PerformStep()
 Add-OutputBoxLine-Green -Message "==> Finished setting privacy..."
+}
+else
+{Add-OutputBoxLine-Red -Message "==> Privacy settings are only for Windows 10..."
+}
 })
 
 $PictureBox9.Add_Click({
